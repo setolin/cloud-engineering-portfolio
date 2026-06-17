@@ -1,0 +1,36 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "ReadOnlyEC2AndCloudWatchForSupport",
+      "Effect": "Allow",
+      "Action": [
+        "ec2:Describe*",
+        "cloudwatch:Describe*",
+        "cloudwatch:Get*",
+        "cloudwatch:List*",
+        "logs:Describe*",
+        "logs:Get*",
+        "logs:FilterLogEvents"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Sid": "ReadOnlyS3ForSpecificBucket",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::REPLACE_WITH_BUCKET_NAME"
+    },
+    {
+      "Sid": "ReadObjectsFromSpecificBucketOnly",
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Resource": "arn:aws:s3:::REPLACE_WITH_BUCKET_NAME/*"
+    }
+  ]
+}

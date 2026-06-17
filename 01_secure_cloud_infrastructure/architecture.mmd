@@ -1,0 +1,29 @@
+flowchart LR
+    User[Support Engineer / Admin] --> Internet[Internet]
+    Internet --> AWSVPC[AWS VPC]
+    Internet --> AzureVNet[Azure VNet]
+
+    subgraph AWS[AWS Environment]
+        AWSVPC --> AWSPublic[Public Subnet]
+        AWSVPC --> AWSPrivate[Private Subnet]
+        AWSPublic --> EC2[EC2 Test Instance]
+        AWSPrivate --> S3[S3 Storage]
+        IAM[AWS IAM Roles & Policies] --> EC2
+        IAM --> S3
+        SG[Security Groups] --> EC2
+    end
+
+    subgraph AZURE[Azure Environment]
+        AzureVNet --> AzurePublic[App Subnet]
+        AzureVNet --> AzurePrivate[Data Subnet]
+        AzurePublic --> VM[Azure VM]
+        AzurePrivate --> Blob[Azure Blob Storage]
+        Entra[Microsoft Entra ID / RBAC] --> VM
+        Entra --> Blob
+        NSG[Network Security Groups] --> VM
+    end
+
+    EC2 --> Monitoring[CloudWatch / Azure Monitor / Grafana]
+    VM --> Monitoring
+    S3 --> Backup[Backup & DR Plan]
+    Blob --> Backup
